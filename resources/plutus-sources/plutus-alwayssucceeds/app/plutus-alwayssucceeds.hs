@@ -4,13 +4,16 @@ import           System.Environment
 
 import           Cardano.Api
 import           Cardano.Api.Shelley
+import qualified Data.Text.Lazy                       as T
 
-import qualified Cardano.Ledger.Alonzo.Data as Alonzo
-import qualified Plutus.V1.Ledger.Api as Plutus
+import qualified Cardano.Ledger.Alonzo.Data           as Alonzo
+import qualified Plutus.V1.Ledger.Api                 as Plutus
 
-import qualified Data.ByteString.Short as SBS
+import qualified Data.ByteString.Short                as SBS
 
-import           Cardano.PlutusExample.AlwaysSucceeds (alwaysSucceedsScriptShortBs, alwaysSucceedsScript)
+import           Cardano.PlutusExample.AlwaysSucceeds
+import qualified Plutus.V1.Ledger.Scripts             as Scripts
+import           Text.Pretty.Simple                   (pShow)
 
 main :: IO ()
 main = do
@@ -19,6 +22,8 @@ main = do
   let scriptnum = if nargs > 0 then read (args!!0) else 42
   let scriptname = if nargs > 1 then args!!1 else  "result.plutus"
   putStrLn $ "Writing output to: " ++ scriptname
+  putStrLn $ "Validator : " ++ (T.unpack . pShow $ validatorPlcPretty)
+  putStrLn $ "Script size: " ++ (show . Scripts.scriptSize . Scripts.getValidator $ validator)
   writePlutusScript scriptnum scriptname alwaysSucceedsScript alwaysSucceedsScriptShortBs
 
 

@@ -63,11 +63,13 @@ executable plutus-alwayssucceeds
   main-is:              plutus-alwayssucceeds.hs
   ghc-options:          -threaded -rtsopts "-with-rtsopts=-T"
 
-  build-depends:        cardano-api
+  build-depends:        bytestring
+                      , cardano-api
                       , cardano-ledger-alonzo
                       , plutus-alwayssucceeds
                       , plutus-ledger-api
-                      , bytestring
+                      , pretty-simple
+                      , text
 
 
 
